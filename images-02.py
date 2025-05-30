@@ -7,10 +7,7 @@ import ugame
 import stage 
 
 def game_scene():
-    print("\n")
-    print("Welcome to Cupid's \n ")
-    print("Matchmaking game!")
-
+    
     image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
     background = stage.Grid(image_bank_background, 10, 8)
 
