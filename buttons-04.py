@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-# Created by: Amara Tie 
-# Date: May 28, 2025
-# This program displays our opening message
+# Created by: Amara Tie
+# Date: June 4, 2025
+# This program moves our sprites with buttons
 
 import ugame
-import stage 
+import stage
+
 
 def game_scene():
-    # Background image 
+    # Background image
     image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
     # Sets background size (10 x 8 and 16 x 16)
     background = stage.Grid(image_bank_background, 10, 8)
+
 
     ship = stage.Sprite(image_bank_sprites, 5, 75, 66)
     # Set the frame to 60fps
@@ -21,11 +23,12 @@ def game_scene():
     # Render background
     game.render_block()
 
+
     # Game Loop
     while True:
         # control keys
         keys = ugame.buttons.get_pressed()
-        
+       
         if keys & ugame.K_X:
             print("A")
         if keys & ugame.K_O:
@@ -45,8 +48,9 @@ def game_scene():
         # Redraw Sprite
         game.render_sprites([ship])
         game.tick()
-        
-        
+       
+       
+
 
 if __name__== "__main__":
     game_scene()
