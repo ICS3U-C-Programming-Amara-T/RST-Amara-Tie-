@@ -22,6 +22,8 @@ def splash_scene():
 
     background = stage.Grid(image_bank_mt_background,constants.SCREEN_X, constants.SCREEN_Y)
 
+    # background image times with the x, y corrdinates
+    # and the index of the image selected
     background.tile(2, 2, 0)  # blank white
 
     background.tile(3, 2, 1)
@@ -80,7 +82,7 @@ def splash_scene():
     game.layers = [background]
 
     game.render_block()
-
+    # game loops repeats forever
     while True: 
         # Wait for 2 seconds
         time.sleep(2.0)

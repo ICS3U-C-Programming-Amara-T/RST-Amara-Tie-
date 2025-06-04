@@ -87,8 +87,6 @@ def splash_scene():
         time.sleep(2.0)
         menu_scene()
 
-
-
         
 
 def menu_scene():
