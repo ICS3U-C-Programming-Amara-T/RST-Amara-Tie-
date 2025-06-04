@@ -41,10 +41,10 @@ def game_scene():
             ship.move(ship.x + 1, ship.y)
         if keys & ugame.K_LEFT:
             ship.move(ship.x - 1, ship.y)
+        if keys & ugame.K_DOWN:
+            ship.move(ship.x, ship.y + 1)
         if keys & ugame.K_UP:
             ship.move(ship.x, ship.y - 1)
-        if keys & ugame.K_RIGHT:
-            ship.move(ship.x, ship.y + 1)
         # Redraw Sprite
         game.render_sprites([ship])
         game.tick()
