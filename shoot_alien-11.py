@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Created by: Amara Tie 
 # Date: May 28, 2025
-# This program displays our opening message
+# This is my game program
 
 import ugame
 import stage
