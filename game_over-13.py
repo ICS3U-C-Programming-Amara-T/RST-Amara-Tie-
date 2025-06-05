@@ -9,17 +9,18 @@ import constants
 import time
 import random
 import supervisor
+
 # function for the splash scene
 def splash_scene():
-
+    # sounds
     coin_sound = open("coin.wav", 'rb')
     sound = ugame.audio
     sound.stop()
     sound.mute(False)
     sound.play(coin_sound)
 
+    # background
     image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
-
 
     background = stage.Grid(image_bank_mt_background,constants.SCREEN_X, constants.SCREEN_Y)
 
@@ -74,12 +75,11 @@ def splash_scene():
 
     background.tile(7, 5, 0)  # blank white
 
-    #background = stage.Grid(image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_X)
-
+    # Set the frame to 60fps
     game = stage.Stage(ugame.display, constants.FPS)
-
+    # Set the images that will show up
     game.layers = [background]
-
+    # Render background
     game.render_block()
 
     while True: 
@@ -88,11 +88,13 @@ def splash_scene():
         menu_scene()
 
         
-
+# main game scene function
 def menu_scene():
 
+    # Background image
     image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
 
+    # Displayed text on the Menu Screen
     text = []
     text1 = stage.Text(width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None)
     text1.move(20, 10)
@@ -104,15 +106,14 @@ def menu_scene():
     text2.text("PRESS START")
     text.append(text2)
 
+    # Sets background size (10 x 8 and 16 x 16)
     background = stage.Grid(image_bank_mt_background,constants.SCREEN_X, constants.SCREEN_Y)
 
-    
-    #background = stage.Grid(image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_X)
-
+    # refresh rate to 60 fps
     game = stage.Stage(ugame.display, constants.FPS)
-
+    # Set the images that will show up
     game.layers = text + [background]
-
+    # Render background
     game.render_block()
 
     while True: 
@@ -131,7 +132,7 @@ def game_scene():
     # code for score
     score = 0
 
-    score_text = stage.Text(width=29, height=14)
+    score_text = stage.Text(width=29, height=14)# keeps track of the score during the game
     score_text.clear()
     score_text.cursor(0,0)
     score_text.move(1,1)
@@ -145,7 +146,7 @@ def game_scene():
     # images
     image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
-    # buttons and tehir state
+    # buttons and their state
     a_button = constants.button_state["button_up"]
     b_button = constants.button_state["button_up"]
     start_button = constants.button_state["button_up"]
@@ -157,13 +158,15 @@ def game_scene():
     sound.stop()
     sound.mute(False)
 
+    # Sets background size (10 x 8 and 16 x 16)
     background = stage.Grid(image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y)
     # creates a random background everytime we start the game 
     for x_location in range (constants.SCREEN_GRID_X):
         for y_location in range(constants.SCREEN_GRID_Y):
             tile_picked = random.randint(1, 3)
             background.tile(x_location, y_location, tile_picked)
-    
+
+    # Sprites
     ship = stage.Sprite(image_bank_sprites, 5, 75, constants.SCREEN_Y - (2 * constants.SPRITE_SIZE))
 
     # list for aliens when we shoot
@@ -181,10 +184,11 @@ def game_scene():
         lasers.append(a_single_laser)
     # This is a stage for the background to show up has a refresh rate of 60
     game = stage.Stage(ugame.display, constants.FPS)
-
+    # Set the images that will show up
     game.layers = [score_text] + lasers + [ship] + aliens + [background]
-
+    # Render background
     game.render_block()
+
     #game loop repeats forever
     while True: 
         # gets the user input
@@ -226,7 +230,8 @@ def game_scene():
             
         if keys & ugame.K_DOWN != 0:
             pass
-
+        
+        # This plays the sound only when the A button is pressed
         if a_button == constants.button_state["button_just_pressed"]:
             for laser_number in range(len(lasers)):
                 if lasers[laser_number].x < 0:
@@ -282,6 +287,7 @@ def game_scene():
             if aliens[alien_number].x > 0:
                 if stage.collide(aliens[alien_number].x + 1, aliens[alien_number].y, aliens[alien_number].x + 15, 
                                  aliens[alien_number].y + 15, ship.x, ship.y, ship.x +15, ship.y + 15):
+                    # if touching pause for 3 seconds and play the crash sound
                     crash_sound = open("crash.wav", 'rb')
                     sound.stop()
                     sound.play(crash_sound)
@@ -293,10 +299,14 @@ def game_scene():
         game.tick()
 
 def game_over_scene(final_score) :
+    # game over scene
 
+    # images for the circuit python
     image_bank_2 = stage.Bank.from_bmp16("mt_game_studio.bmp")
+    # selects the first image in the image bank
     background = stage.Grid(image_bank_2,constants.SCREEN_X, constants.SCREEN_Y)
 
+    # text on screen 
     text = []
     text1 = stage.Text(width=29, height=14, font=None, palette=constants.RED_PALETTE, buffer=None)
     text1.move(22, 20)
@@ -313,19 +323,22 @@ def game_over_scene(final_score) :
     text3.text("PRESS SELECT")
     text.append(text3)
 
+    # creates a stage for the background to show up on
+    # sets refresh rate to 60 fps
     game = stage.Stage(ugame.display, constants.FPS)
 
+    # set the layers (order in of what should show up)
     game.layers = text + [background]
-
+    # renders background
     game.render_block()
 
     while True: 
         # gets the user input
         keys = ugame.buttons.get_pressed()
-
+        # when START is pressed
         if keys & ugame.K_SELECT != 0:
             supervisor.reload()
-
+        # updates game logic
         game.tick()
 
     
